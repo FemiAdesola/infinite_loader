@@ -8,8 +8,8 @@ const url = 'https://script.google.com/macros/s/AKfycbxFlQXkvna9jYamLWhTQ1k3cJIt
 
 const perPage = { page: 1 };
 const page = {};
+page.loadMorePage = true;
 page.container = document.createElement('div');
-page.container.textContent = "hello world";
 page.main = document.querySelector('section');
 page.main.append(page.container);
 
@@ -28,9 +28,29 @@ function getData(){
     // const baseURL = url + '?limit=20' + perPage.page;
     const baseURL = url + '?p=' + perPage.page;
   fetch(baseURL).then((rep)=> rep.json())
-  .then((json) => {
+      .then((json) => {
+      if(json.data.pages.next != null){
+        page.loadMorePage = true;
+    }
     console.log(json.data);
     renderData(json.data.posts)
   })
+}
+
+// For loading scroll 
+window.onscroll = function(ev){
+    if (
+        (window.innerHeight + window.scrollY) >=
+        (document.body.offsetHeight - 300)) {
+        if (page.loadMorePage) {
+            page.loadMorePage = false;
+            addNewData();
+        }
+    }
+}
+
+function addNewData(){
+  perPage.page++;
+  getData();
 }
 
