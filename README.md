@@ -1,2 +1,4 @@
 ## Scroll Loader
-- Unlimited scroll content with vanilla javascript, html and css
+- infinite scroll content with vanilla javascript, html and css
+
+![image](/img.png)
