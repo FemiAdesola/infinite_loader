@@ -13,12 +13,21 @@ page.container = document.createElement('div');
 page.main = document.querySelector('section');
 page.main.append(page.container);
 
+page.message = document.createElement('div');
+page.message.textContent = "---Scroll to load more---";
+page.main.append(page.message);
+
 getData();
+
 // Forloading data 
 function renderData(data){
   data.forEach(function(country){
     const div = document.createElement('div');
-    div.innerHTML = `${country[8]}`;
+      div.innerHTML = `
+      <h3>${country[8]}</h3>
+      <div>${country[5]} stars by ${country[6]} students </div>
+    <hr>
+      `;
     page.container.appendChild(div);
   })
 }
@@ -27,13 +36,20 @@ function renderData(data){
 function getData(){
     // const baseURL = url + '?limit=20' + perPage.page;
     const baseURL = url + '?p=' + perPage.page;
-  fetch(baseURL).then((rep)=> rep.json())
+    page.message.textContent= "loading....."
+    fetch(baseURL).then((rep) => rep.json())
       .then((json) => {
       if(json.data.pages.next != null){
         page.loadMorePage = true;
-    }
-    console.log(json.data);
-    renderData(json.data.posts)
+        
+        // Message function for user to load more
+        page.message.textContent = "-Page "+perPage.page+" --Scroll to load more---";
+        }else{
+            page.message.style.display = "none";
+        }
+          //
+        console.log(json.data);
+        renderData(json.data.posts)
   })
 }
 
