@@ -7,8 +7,21 @@ const url = 'https://script.google.com/macros/s/AKfycbxFlQXkvna9jYamLWhTQ1k3cJIt
 // const url = 'https://pokeapi.co/api/v2/ability/';
 
 const perPage = { page: 1 };
+const page = {};
+page.container = document.createElement('div');
+page.container.textContent = "hello world";
+page.main = document.querySelector('section');
+page.main.append(page.container);
 
 getData();
+// Forloading data 
+function renderData(data){
+  data.forEach(function(country){
+    const div = document.createElement('div');
+    div.innerHTML = `${country[8]}`;
+    page.container.appendChild(div);
+  })
+}
 
 // to fetch data 
 function getData(){
@@ -20,3 +33,4 @@ function getData(){
     renderData(json.data.posts)
   })
 }
+
