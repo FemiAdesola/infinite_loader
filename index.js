@@ -54,3 +54,9 @@ function addNewData(){
   getData();
 }
 
+// for emptying initial data 
+initialLoading();
+function initialLoading() {
+    page.container.innerHTML = "";
+    getData
+}
